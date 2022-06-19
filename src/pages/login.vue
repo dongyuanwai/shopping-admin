@@ -15,16 +15,16 @@
                 <span>账号密码登录</span>
                 <span class="line"></span>
             </div>
-            <el-form :model="form" >
-                <el-form-item >
+            <el-form ref="formRef" :model="form" :rules="rules" class="w-[250px]">
+                <el-form-item prop="username">
                     <el-input v-model="form.username" placeholder="请输入用户名" >
                         <template #prefix>
                             <el-icon><User /></el-icon>
                         </template>
                     </el-input>
                 </el-form-item>
-                <el-form-item >
-                    <el-input v-model="form.password" placeholder="请输入密码">
+                <el-form-item prop="password">
+                    <el-input v-model="form.password" type="password" placeholder="请输入密码" show-password>
                         <template #prefix>
                             <el-icon><Lock /></el-icon>
                         </template>
@@ -40,16 +40,35 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { ref,reactive } from 'vue'
 import { User,Lock  } from '@element-plus/icons-vue'
-// do not use same name with ref
+
 const form = reactive({
     username:'',
     password:''
 })
+const rules = reactive({
+  username: [
+    { required: true, message: '用户名不能为空', trigger: 'blur' },
+  ],
+  password: [
+    { required: true, message: '密码不能为空', trigger: 'blur' },
+    { min: 3, max: 16, message: '密码长度在3~16之间', trigger: 'blur' },
+  ],
+})
 
+const formRef = ref(null)
 const onSubmit = () => {
-    console.log('submit!')
+    formRef.value.validate((valid)=>{
+        if(valid){
+            console.log("验证通过了",valid)
+            console.log('submit!')
+        }else{
+            console.log("验验证没通过",valid)
+            return valid
+        }
+    })
+    
 }
 </script>
 
