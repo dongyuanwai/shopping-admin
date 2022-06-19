@@ -72,7 +72,7 @@ const onSubmit = () => {
 }
 </script>
 
-<style>
+<style scoped>
 .login-container{
     @apply min-h-screen bg-indigo-500;
 }
