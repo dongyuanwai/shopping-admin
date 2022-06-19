@@ -1,19 +1,19 @@
 <template>
-    <el-row class="min-h-screen bg-indigo-500">
-        <el-col :lg="16" :md="12" class="flex items-center justify-center">
+    <el-row class="login-container">
+        <el-col :lg="16" :md="12" class="left">
             <div>
-                <div class=" text-light-50 text-5xl mb-4 font-bold">
+                <div class="tip">
                     欢迎光临
                 </div>
                 <div class="text-gray-400">此网页是Dong Yuanwai的后台管理网站</div>
             </div>
         </el-col>
-        <el-col :lg="8" :md="12" class="bg-light-50 flex items-center justify-center flex-col">
+        <el-col :lg="8" :md="12" class="right">
             <h2 class=" font-bold text-3xl text-gray-800">欢迎回来</h2>
-            <div class="flex items-center justify-center my-5 text-gray-500 space-x-2">
-                <span class="h-[1px] w-16 bg-gray-200"></span>
+            <div class="right-tip">
+                <span class="line"></span>
                 <span>账号密码登录</span>
-                <span class="h-[1px] w-16 bg-gray-200"></span>
+                <span class="line"></span>
             </div>
             <el-form :model="form" >
                 <el-form-item >
@@ -52,3 +52,24 @@ const onSubmit = () => {
     console.log('submit!')
 }
 </script>
+
+<style>
+.login-container{
+    @apply min-h-screen bg-indigo-500;
+}
+.left{
+    @apply flex items-center justify-center;
+}
+.left .tip{
+    @apply text-light-50 text-5xl mb-4 font-bold;
+}
+.right{
+    @apply bg-light-50 flex items-center justify-center flex-col;
+}
+.right .right-tip{
+    @apply flex items-center justify-center my-5 text-gray-500 space-x-2;
+}
+.line{
+    @apply h-[1px] w-16 bg-gray-200;
+}
+</style>
