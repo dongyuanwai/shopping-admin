@@ -42,6 +42,7 @@
 <script setup>
 import { ref,reactive } from 'vue'
 import { User,Lock  } from '@element-plus/icons-vue'
+import {login} from '~/api/manager.js'
 
 const form = reactive({
     username:'',
@@ -60,13 +61,17 @@ const rules = reactive({
 const formRef = ref(null)
 const onSubmit = () => {
     formRef.value.validate((valid)=>{
-        if(valid){
-            console.log("验证通过了",valid)
-            console.log('submit!')
-        }else{
-            console.log("验验证没通过",valid)
-            return valid
+        if(!valid){
+            return false
         }
+        console.log("验证通过了",valid)
+
+        // 调用登录接口
+        login(form.username,form.password).then((res)=>{
+            console.log(res);
+        }).catch((err)=>{
+            console.log("失败了",err.response.data);
+        })
     })
     
 }
