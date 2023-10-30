@@ -36,7 +36,7 @@
                 </el-form-item>
 
                 <el-form-item>
-                    <el-button round class="w-[250px]" type="primary" @click="onSubmit">登录</el-button>
+                    <el-button round class="w-[250px]" type="primary" :loading="loading" @click="onSubmit">登录</el-button>
                 </el-form-item>
             </el-form>
         </el-col>
@@ -47,9 +47,13 @@
 import { ref, reactive } from 'vue'
 import { User, Lock } from '@element-plus/icons-vue'
 import { ElNotification } from 'element-plus'
-import { login } from '~/api/manager.js'
+import { login, getInfo } from '~/api/manager.js'
 import { useRouter } from "vue-router"
 import { useCookies } from '@vueuse/integrations/useCookies'
+import { useUserStore } from "~/store/index"
+
+
+const store = useUserStore()
 
 const router = useRouter()
 
@@ -67,6 +71,7 @@ const rules = reactive({
     ],
 })
 
+const loading = ref(false)
 const formRef = ref(null)
 const onSubmit = () => {
     formRef.value.validate((valid) => {
@@ -74,6 +79,7 @@ const onSubmit = () => {
             return false
         }
 
+        loading.value = true
         // 调用登录接口
         login(form.username, form.password).then((res) => {
             ElNotification({
@@ -83,7 +89,13 @@ const onSubmit = () => {
             })
             const cookies = useCookies()
             cookies.set('user-token', res.token)
-            router.push('/')
+            getInfo().then((res2)=>{
+                console.log("用户信息",res2)
+                store.setUser(res2)
+                router.push('/')
+            })
+        }).finally(() => {
+            loading.value = false
         })
     })
 
