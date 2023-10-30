@@ -49,7 +49,9 @@ import { User, Lock } from '@element-plus/icons-vue'
 import { ElNotification } from 'element-plus'
 import { login } from '~/api/manager.js'
 import { useRouter } from "vue-router"
+import { useCookies } from '@vueuse/integrations/useCookies'
 
+const cookies = useCookies(['locale'])
 const router = useRouter()
 
 const form = reactive({
@@ -83,6 +85,9 @@ const onSubmit = () => {
                     type: 'success',
                     duration:2000,
                 })
+                
+                console.log("🚀 ~ file: index.vue:7 ~ cookies:", cookies)
+                cookies.set('token', res.data.data.token)
                 router.push('/')
             }
         }).catch((err) => {
