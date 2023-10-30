@@ -4,10 +4,10 @@
     </div>
 </template>
 <script  setup>
-    import { useUserStore } from "~/store/index"
-    const store = useUserStore()
-    const onSubmit = () => {
-        console.log("user",store.user)
-    }
+import { useUserStore } from "~/store/index"
+import { getToken } from "~/composables/auth"
+const onSubmit = () => {
+    console.log("user",getToken())
+}
 
 </script>

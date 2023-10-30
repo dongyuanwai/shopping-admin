@@ -46,12 +46,11 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { User, Lock } from '@element-plus/icons-vue'
-import { ElNotification } from 'element-plus'
+import { toast } from '../composables/utils'
 import { login, getInfo } from '~/api/manager.js'
 import { useRouter } from "vue-router"
-import { useCookies } from '@vueuse/integrations/useCookies'
 import { useUserStore } from "~/store/index"
-
+import { setToken } from "~/composables/auth"
 
 const store = useUserStore()
 
@@ -82,13 +81,10 @@ const onSubmit = () => {
         loading.value = true
         // 调用登录接口
         login(form.username, form.password).then((res) => {
-            ElNotification({
-                message: '登录成功',
-                type: 'success',
-                duration: 2000,
-            })
-            const cookies = useCookies()
-            cookies.set('user-token', res.token)
+            console.log("-=-=",res)
+            setToken(res.token)
+            toast('success','登录成功')
+            
             getInfo().then((res2)=>{
                 console.log("用户信息",res2)
                 store.setUser(res2)
