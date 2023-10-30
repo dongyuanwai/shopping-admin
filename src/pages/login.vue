@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive,onMounted,onBeforeUnmount } from 'vue'
 import { User, Lock } from '@element-plus/icons-vue'
 import { toast } from '../composables/utils'
 import { login, getInfo } from '~/api/manager.js'
@@ -81,12 +81,10 @@ const onSubmit = () => {
         loading.value = true
         // 调用登录接口
         login(form.username, form.password).then((res) => {
-            console.log("-=-=",res)
             setToken(res.token)
             toast('success','登录成功')
-            
+
             getInfo().then((res2)=>{
-                console.log("用户信息",res2)
                 store.setUser(res2)
                 router.push('/')
             })
@@ -96,6 +94,18 @@ const onSubmit = () => {
     })
 
 }
+
+const onKeyUp = (e)=>{
+    if(e.key=="Enter"){
+        onSubmit()
+    }
+}
+onMounted(()=>{
+    document.addEventListener("keyup",onKeyUp)
+})
+onBeforeUnmount(()=>{
+    document.removeEventListener("keyup",onKeyUp)
+})
 </script>
 
 <style scoped lang="scss">

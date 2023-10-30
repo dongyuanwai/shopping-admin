@@ -1,13 +1,13 @@
 <template>
     <div>后台首页
-        <el-button round class="w-[250px]" type="primary" @click="onSubmit">登录</el-button>
+        {{ store.user }}
     </div>
 </template>
 <script  setup>
+import { reactive } from "vue";
 import { useUserStore } from "~/store/index"
 import { getToken } from "~/composables/auth"
-const onSubmit = () => {
-    console.log("user",getToken())
-}
+
+const store = useUserStore()
 
 </script>
