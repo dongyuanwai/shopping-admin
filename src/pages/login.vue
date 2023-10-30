@@ -51,7 +51,6 @@ import { login } from '~/api/manager.js'
 import { useRouter } from "vue-router"
 import { useCookies } from '@vueuse/integrations/useCookies'
 
-const cookies = useCookies(['locale'])
 const router = useRouter()
 
 const form = reactive({
@@ -74,30 +73,17 @@ const onSubmit = () => {
         if (!valid) {
             return false
         }
-        console.log("验证通过了", valid)
 
         // 调用登录接口
         login(form.username, form.password).then((res) => {
-            console.log(res);
-            if (res.status == 200) {
-                ElNotification({
-                    message: '登录成功',
-                    type: 'success',
-                    duration:2000,
-                })
-                
-                console.log("🚀 ~ file: index.vue:7 ~ cookies:", cookies)
-                cookies.set('token', res.data.data.token)
-                router.push('/')
-            }
-        }).catch((err) => {
-            console.log("失败了", err.response.data);
             ElNotification({
-                title: 'Error',
-                message: err.response.data.msg || '请求失败',
-                type: 'error',
+                message: '登录成功',
+                type: 'success',
                 duration: 2000,
             })
+            const cookies = useCookies()
+            cookies.set('user-token', res.token)
+            router.push('/')
         })
     })
 
