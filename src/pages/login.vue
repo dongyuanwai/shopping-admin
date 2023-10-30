@@ -12,7 +12,7 @@
             <h2 class=" font-bold text-3xl text-gray-800">欢迎回来</h2>
             <div class="right-tip">
                 <span class="line"></span>
-                <span>账号密码登录</span>
+                <span class="">账号密码登录</span>
                 <span class="line"></span>
             </div>
             <el-form ref="formRef" :model="form" :rules="rules" class="w-[250px]">
@@ -85,10 +85,10 @@ const onSubmit = () => {
     @apply flex items-center justify-center;
 }
 .left .tip{
-    @apply text-light-50 text-5xl mb-4 font-bold;
+    @apply text-white text-5xl mb-4 font-bold;
 }
 .right{
-    @apply bg-light-50 flex items-center justify-center flex-col;
+    @apply bg-white flex items-center justify-center flex-col;
 }
 .right .right-tip{
     @apply flex items-center justify-center my-5 text-gray-500 space-x-2;
