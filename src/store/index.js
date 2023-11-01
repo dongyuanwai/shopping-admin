@@ -1,23 +1,38 @@
 import { defineStore } from 'pinia'
 import {  getInfo } from '~/api/manager.js'
 
-export const useUserStore = defineStore('user',{
-    state: () => ({}),
+// pinia 使用教程 https://juejin.cn/post/7207848485856100410
+export const useUserStore = defineStore('userInfo',{
+    state: () => {
+        return {
+            userInfo:{},
+        }
+    },
     actions: {
         setUser(newUser) {
-            console.log("🚀 ~ file: index.js:7 ~ setUser ~ newUser:", newUser)
-            this.user = newUser
+            this.userInfo = newUser
         },
         getUserInfo(){
             return new Promise((resolve,reject)=>{
                 getInfo().then((res)=>{
-                    console.log("shuju-=-=",res)
-                    this.user = res
+                    this.userInfo = res
                     resolve(res)
                 }).catch((err)=>{
                     reject(err)
                 })
             })
         }
+    }
+})
+
+export const useFormInfo = defineStore('formInfo',{
+    state: () => {
+        return {
+            name:"dong",
+            age:19
+        }
+    },
+    actions: {
+        
     }
 })

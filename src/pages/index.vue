@@ -1,13 +1,16 @@
 <template>
     <div>后台首页
-        {{ store.user }}
+        {{ userStore.userInfo }}
     </div>
 </template>
 <script  setup>
 import { reactive } from "vue";
-import { useUserStore } from "~/store/index"
+import { useUserStore, useFormInfo } from "~/store/index"
 import { getToken } from "~/composables/auth"
+import { storeToRefs } from 'pinia'
 
-const store = useUserStore()
+const userStore = useUserStore()
+
+
 
 </script>
